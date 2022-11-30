@@ -1,4 +1,4 @@
-import { useEffect, useState, useTransition } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from '@mui/material'
 
@@ -7,16 +7,17 @@ import { ApiEinsatzResponse } from '../@types'
 import { useGetEinsaetze } from '../hooks'
 
 type Props = {
-  keywordFilter: string | undefined
+  keywordFilter: string
+  yearFilter: string
 }
 
-const EinsatzTable: React.FC<Props> = ({ keywordFilter }) => {
+const EinsatzTable: React.FC<Props> = ({ keywordFilter, yearFilter }) => {
   const [page, setPage] = useState(0)
   const [rowsPerPage, setRowsPerPage] = useState(15)
   const [rows, setRows] = useState<Array<ApiEinsatzResponse> | undefined>(undefined)
 
   const { data: einsaetze, isLoading } = useGetEinsaetze({
-    params: { year: '2022' },
+    params: { count: rowsPerPage.toString(), jahr: yearFilter },
     options: {
       onSuccess: data => {
         keywordFilter === 'alle' ? setRows(data) : setRows(data.filter(e => e.typ === keywordFilter))
@@ -30,7 +31,7 @@ const EinsatzTable: React.FC<Props> = ({ keywordFilter }) => {
     }
   }, [keywordFilter])
 
-  const handleChangePage = (event: unknown, newPage: number) => {
+  const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage)
   }
 

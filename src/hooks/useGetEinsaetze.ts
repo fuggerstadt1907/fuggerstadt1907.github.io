@@ -2,26 +2,25 @@ import { UseQueryOptions, useQuery } from 'react-query'
 
 import { data_2020 } from '../@mocks'
 import { ApiEinsatzResponse } from '../@types'
-import { BASE_URL } from '../config'
+import { request } from '../api'
 import { isLocalEnvironment, objectHasTruthyValuesOnly } from '../utils'
 
 interface GetEinsaetzeParams {
-  year: string
+  jahr: string
   count?: string
-  offset?: string
 }
 
 interface GetEinsaetzeResponse extends Array<ApiEinsatzResponse> {}
 
 type GetEinsaetze = (params: GetEinsaetzeParams) => Promise<GetEinsaetzeResponse>
 
-const getEinsaetze: GetEinsaetze = async ({ year, count, offset }) => {
+const getEinsaetze: GetEinsaetze = async ({ jahr, count }) => {
   if (isLocalEnvironment()) {
     return await new Promise(resolve => resolve(data_2020))
   }
-  const searchParams = year ? new URLSearchParams({ jahr: year }) : undefined
-  const response = await fetch(BASE_URL + '?' + searchParams)
-  return response.json()
+  return await request({
+    searchParams: { jahr, count },
+  })
 }
 
 const useGetEinsaetze = ({

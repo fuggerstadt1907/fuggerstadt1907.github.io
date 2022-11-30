@@ -1,7 +1,7 @@
 import { Box, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import dayjs from 'dayjs'
 
-import { keywords, testData } from '../@mocks'
+import { keywords, testData, years } from '../@mocks'
 
 type Props = {
   keyword: string
@@ -30,7 +30,7 @@ export const FilterSelections: React.FC<Props> = ({ keyword, year, onChangeKeybo
             value={year}
             label="Jahr"
             onChange={handleChangeYear}>
-            {[...new Set(testData.map(data => dayjs(data.date, 'YYYY-MM-DD').year()))].map(date => (
+            {years.map(date => (
               <MenuItem key={date} value={date}>
                 {date}
               </MenuItem>

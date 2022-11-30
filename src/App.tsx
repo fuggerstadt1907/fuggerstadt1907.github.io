@@ -4,14 +4,14 @@ import { Box, Typography } from '@mui/material'
 import dayjs from 'dayjs'
 import { QueryClientProvider } from 'react-query'
 
-import { testData } from './@mocks'
+import { testData, years } from './@mocks'
 import { EinsatzTable, FilterSelections } from './components'
 import { queryClient } from './config'
 import { mapKeyword } from './utils'
 
 const AppRoot = () => {
   const [keyword, selectedKeyword] = useState('alle')
-  const [year, selectYear] = useState(dayjs(testData[0].date, 'YYYY-MM-DD').year().toString())
+  const [year, selectYear] = useState(years[0])
 
   return (
     <Box>
@@ -19,7 +19,7 @@ const AppRoot = () => {
         Übersicht Einsätze
       </Typography>
       <FilterSelections keyword={keyword} year={year} onChangeKeyboard={selectedKeyword} onChangeYear={selectYear} />
-      <EinsatzTable keywordFilter={mapKeyword(keyword)} />
+      <EinsatzTable yearFilter={year} keywordFilter={mapKeyword(keyword)} />
     </Box>
   )
 }

@@ -1,4 +1,5 @@
-export const isLocalEnvironment = () => window.location.hostname === 'localhost'
+export const isLocalEnvironment = () =>
+  window.location.hostname === 'localhost' || window.location.hostname === 'fuggerstadt1907.github.io'
 
 export const objectHasTruthyValuesOnly = (object: { [key: string]: any }) =>
   Object.values(object).every(value => Boolean(value))
@@ -21,6 +22,9 @@ export const mapKeyword = (keyword: string) => {
       return 'S'
 
     case 'alle':
+      return 'alle'
+
+    default:
       return 'alle'
   }
 }
