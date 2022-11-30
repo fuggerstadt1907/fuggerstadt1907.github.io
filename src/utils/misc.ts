@@ -1,3 +1,5 @@
+export const isLocalEnvironment = () => window.location.hostname === 'localhost'
+
 export const objectHasTruthyValuesOnly = (object: { [key: string]: any }) =>
   Object.values(object).every(value => Boolean(value))
 
